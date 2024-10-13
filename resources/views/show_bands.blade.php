@@ -29,7 +29,7 @@
                 <tr>
                     <th scope="row">{{ $band->id }}</th>
                     <td>{{ $band->name }}</td>
-                    <td><img src="{{ $band->photo ? asset('storage/' . $band->photo) : asset('images/nophoto.jpg') }}" alt="{{ $band->name }}" width="100" height="100"></td>
+                    <td><img src="{{ $band->photo? asset('storage/' . $band->photo) : asset('images/nophoto.jpg') }}" alt="{{ $band->name }}" width="100" height="100"></td>
                     <td>{{ $band->albums_count }}</td>
                     <td><a href="{{ route('bands.albums', $band->id) }}">Ver álbuns</a></td>
                     <td><a  href="{{route('delete.band', $band->id)}}" class="btn btn-danger">Delete</a></td>

@@ -39,27 +39,41 @@ class AlbumsController extends Controller
 
     public function addAlbum(Request $request){
 
-        $albumdetails=request()->validate([
+        if(Auth::user()->user_type==1 ||Auth::user()->user_type==2 ){
 
-            "name"=>"required|string|max:50",
-            "cover"=>"required|image",
-            "date_of_release"=>"required|date",
-            'band_id' => 'required|integer',
-        ]);
+            $albumdetails=request()->validate([
 
-        if ($request->hasFile('cover')) {
-            $albumdetails['cover'] = $request->file('cover')->store('album_photos', 'public'); // Save photo
+                "name"=>"required|string|max:50",
+                "cover"=>"required|image",
+                "date_of_release"=>"required|date",
+                'band_id' => 'required|integer',
+            ]);
+    
+            if ($request->hasFile('cover')) {
+
+                $albumdetails['cover'] = $request->file('cover')->store('photos', 'public'); // Save photo
+            }
+            $newalbum=Album::create($albumdetails);
+    
+            return redirect()->route('show.albums')->with("message","Álbum adicionado com successo.");
+
         }
-        $newalbum=Album::create($albumdetails);
 
-        return redirect()->route('show.albums')->with("message","Álbum adicionado com successo.");
+        return redirect()->route('show.albums')->with("message","User sem permissões."); 
 
     }
 
     public function deleteAlbum(Album $album)
 {
-    $album->delete();
+
+    if(Auth::user()->user_type==1 ){
+
+        $album->delete();
     return redirect()->back()->with('message', 'Álbum apagado.');
+
+    }
+
+    return redirect()->back()->with('message', 'Apenas o admin pode apagar álbums.');
 }
 
 public function getEditAlbum(Album $album){

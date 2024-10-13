@@ -19,7 +19,7 @@
     @foreach($albums as $album)
     <tr>
         <td>{{ $album->name }}</td>
-        <td>{{ $album->cover }}</td>
+        <td><img src="{{ $album->cover? asset('storage/' . $album->cover) : asset('images/nophoto.jpg') }}" alt=""></td>
         <td>{{ $album->date_of_release}}</td>
         <td><a href="{{ route('edit.albumview', $album->id) }}">Editar álbum</a></td>
         <td><a href="{{route('albums.delete', $album->id)}}" class="btn btn-danger">Apagar álbum</a></td>

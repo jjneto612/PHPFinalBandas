@@ -43,14 +43,14 @@ class BandController extends Controller
                 $request->validate([
     
                     "name"=> "required|string!max:50",
-                    "photo"=> "image"
+                    "photo"=> "required|image"
                 ]);
     
                 $photo=null;
     
                 if($request->hasFile("photo")){
     
-                    $photo = Storage::putFile("public",$request->photo);
+                    $photo = $request->file('photo')->store('photos', 'public');
                 }
     
                 Band::where("id",$request->id)
@@ -72,7 +72,7 @@ class BandController extends Controller
     
     
                 if ($request->hasFile("photo")) {
-                    $photo = Storage::putFile("public",$request->photo);
+                    $photo = $request->file('photo')->store('photos', 'public');
                 }
                 Band::insert([
     
