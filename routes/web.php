@@ -29,6 +29,7 @@ Route::get('/home', function(){
 Route::get("/all_bands",[BandController::class, "index"])->name("show.bands");
 Route::get("/add_band",[BandController::class, "addingBand"])->name("adding.band")->middleware('auth');
 Route::post("/add_band",[BandController::class, "addBand"])->name("add.band");
+Route::get("bands/{id}",[BandController::class, "viewBand"])->name("band.view")->middleware('auth');
 Route::get("/bands/delete/{id}",[BandController::class, "deleteBand"])->name("delete.band")->middleware('auth');
 Route::get("/all_bands/search",[BandController::class, "searchBand"])->name("search.band");
 Route::get("/registar", [UserController::class,"showForm"])->name("create.user");

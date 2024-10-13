@@ -28,6 +28,15 @@ class BandController extends Controller
         return view("add_band");
     }
 
+    public function viewBand($id){
+
+        $band=Db::table('table_bands')
+        ->where('id', $id)
+        ->first();
+
+        return view('view_band',compact('band'));
+    }
+
 
     public function addBand(Request $request){
 
@@ -42,7 +51,7 @@ class BandController extends Controller
     
                 $request->validate([
     
-                    "name"=> "required|string!max:50",
+                    "name"=> "required|string:max:50",
                     "photo"=> "required|image"
                 ]);
     
